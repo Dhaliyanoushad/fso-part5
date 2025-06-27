@@ -1,13 +1,14 @@
 import React from "react";
 
-const Blog = ({ blog }) => (
-  <div>
-    {blog.title} {blog.author} {blog.url} {blog.likes}
-  </div>
-);
-
-export default Blog;
-export const NewBlog = ({ handleCreateBlog }) => {
+const NewBlog = ({
+  handleCreateBlog,
+  title,
+  author,
+  url,
+  setTitle,
+  setAuthor,
+  setUrl,
+}) => {
   return (
     <div>
       <h2>Create New</h2>
@@ -44,3 +45,5 @@ export const NewBlog = ({ handleCreateBlog }) => {
     </div>
   );
 };
+
+export default NewBlog;
