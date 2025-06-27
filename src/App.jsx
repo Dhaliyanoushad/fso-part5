@@ -18,6 +18,7 @@ const App = () => {
         username,
         password,
       });
+      window.localStorage.setItem("loggedBlogappUser", JSON.stringify(user));
       setUser(user);
       setUsername("");
       setPassword("");
@@ -28,11 +29,26 @@ const App = () => {
       }, 5000);
     }
   };
+  const handleLogout = () => {
+    window.localStorage.removeItem("loggedBlogappUser"); // or use clear() if you want to remove everything
+    setUser(null); // Update state so UI goes back to login
+    setBlogs([]); // Optional: clear blogs if you want
+  };
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
     console.log("blogs", blogs);
   }, []);
+
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem("loggedBlogappUser");
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON);
+      setUser(user);
+      // blogService.setToken(user.token);
+    }
+  }, []);
+
   if (user === null) {
     return (
       <div>
@@ -67,6 +83,7 @@ const App = () => {
     <div>
       <h2>Blogs</h2>
       <p>{user.name} logged in</p>
+      <button onClick={handleLogout}>logout</button>
       {errorMessage && <div className="error">{errorMessage}</div>}
       <ol>
         {blogs.map((blog) => (
