@@ -1,14 +1,10 @@
 import React from "react";
+import { useState } from "react";
 
-const NewBlog = ({
-  handleCreateBlog,
-  title,
-  author,
-  url,
-  setTitle,
-  setAuthor,
-  setUrl,
-}) => {
+const NewBlog = ({ handleCreateBlog }) => {
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+  const [url, setUrl] = useState("");
   return (
     <div>
       <h2>Create New</h2>

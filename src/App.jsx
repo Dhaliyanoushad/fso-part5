@@ -11,9 +11,7 @@ const App = () => {
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [url, setUrl] = useState("");
+
   const [successMessage, setSuccessMessage] = useState(null);
 
   const handleLogin = async (event) => {
@@ -78,16 +76,13 @@ const App = () => {
   };
 
   useEffect(() => {
-    blogService.getAll().then((blogs) => setBlogs(blogs));
-    console.log("blogs", blogs);
-  }, []);
-
-  useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedBlogappUser");
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
       blogService.setToken(user.token);
+
+      blogService.getAll().then((blogs) => setBlogs(blogs));
     }
   }, []);
 
@@ -130,20 +125,12 @@ const App = () => {
       {errorMessage && <div className="error">{errorMessage}</div>}
       <button onClick={handleLogout}>Logout</button>
       <Togglable buttonLabel="New Blog">
-        <NewBlog
-          handleCreateBlog={handleCreateBlog}
-          title={title}
-          author={author}
-          url={url}
-          setTitle={setTitle}
-          setAuthor={setAuthor}
-          setUrl={setUrl}
-        />
+        <NewBlog handleCreateBlog={handleCreateBlog} />
       </Togglable>
       {errorMessage && <div className="error">{errorMessage}</div>}
       <ol>
         {blogs.map((blog) => (
-          <li>
+          <li key={blog.id}>
             <Blog key={blog.id} blog={blog} />
           </li>
         ))}
