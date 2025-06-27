@@ -12,9 +12,17 @@ const App = () => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
+  const [successMessage, setSuccessMessage] = useState(null);
 
   const handleLogin = async (event) => {
     event.preventDefault();
+    if (username === "" || password === "") {
+      setErrorMessage("Username and password must not be empty");
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 5000);
+      return;
+    }
 
     try {
       const user = await loginService.login({
@@ -29,7 +37,7 @@ const App = () => {
       setUsername("");
       setPassword("");
     } catch (exception) {
-      setErrorMessage("Wrong credentials");
+      setErrorMessage(exception.message || "Login failed");
       setTimeout(() => {
         setErrorMessage(null);
       }, 5000);
@@ -49,6 +57,12 @@ const App = () => {
         url,
       };
       const createdBlog = await blogService.create(newBlog);
+      setSuccessMessage(
+        `A new blog ${createdBlog.title} by ${createdBlog.author} added`
+      );
+      setTimeout(() => {
+        setSuccessMessage(null);
+      }, 5000);
       setBlogs(blogs.concat(createdBlog));
       setTitle("");
       setAuthor("");
@@ -110,6 +124,8 @@ const App = () => {
       <p>Welcome, {user.name}!</p>
       <p>Here are the blogs:</p>
       <h2>Blogs</h2>
+      {successMessage && <div className="success">{successMessage}</div>}
+      {errorMessage && <div className="error">{errorMessage}</div>}
       <button onClick={handleLogout}>Logout</button>
       <h2>Create New</h2>
       <form onSubmit={handleCreateBlog}>
