@@ -11,7 +11,6 @@ const App = () => {
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-
   const [successMessage, setSuccessMessage] = useState(null);
 
   const handleLogin = async (event) => {
@@ -76,6 +75,7 @@ const App = () => {
   };
 
   useEffect(() => {
+    console.log("Enthaada Code Veno Ninekk?");
     const loggedUserJSON = window.localStorage.getItem("loggedBlogappUser");
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
