@@ -1,10 +1,43 @@
 import React from "react";
 import { useState } from "react";
+import blogService from "../services/blogs";
 
-const NewBlog = ({ handleCreateBlog }) => {
+const NewBlog = ({
+  fetchBlogs,
+  setErrorMessage,
+  setSuccessMessage,
+  setBlogs,
+}) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [url, setUrl] = useState("");
+  const handleCreateBlog = async (event) => {
+    event.preventDefault();
+    try {
+      const newBlog = {
+        title,
+        author,
+        url,
+      };
+      const createdBlog = await blogService.create(newBlog);
+      fetchBlogs();
+      setSuccessMessage(
+        `A new blog ${createdBlog.title} by ${createdBlog.author} added`
+      );
+      setTimeout(() => {
+        setSuccessMessage(null);
+      }, 5000);
+      setTitle("");
+      setAuthor("");
+      setUrl("");
+    } catch (exception) {
+      console.error("Error creating blog:", exception);
+      setErrorMessage("Failed to create blog");
+      setTimeout(() => {
+        setErrorMessage(null);
+      }, 5000);
+    }
+  };
   return (
     <div>
       <h2>Create New</h2>

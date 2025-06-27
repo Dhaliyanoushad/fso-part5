@@ -2,9 +2,10 @@ import React from "react";
 import { useState } from "react";
 import blogService from "../services/blogs";
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, fetchBlogs }) => {
   const [view, setView] = useState(false);
   const [likes, setLikes] = useState(blog.likes);
+  const [error, setError] = useState(null);
 
   const toggleView = () => {
     setView(!view);
@@ -19,9 +20,23 @@ const Blog = ({ blog }) => {
       console.error("Error liking the blog:", error);
     }
   };
+  const handleDelete = async () => {
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
+      try {
+        await blogService.remove(blog.id);
+        fetchBlogs(); // Refresh the blog list after deletion
+        // Assuming you have a function to refresh the blog list
+        // refreshBlogs();
+      } catch (error) {
+        setError(error.response?.data?.error || "Failed to delete blog");
+        console.error("Error deleting the blog:", error);
+      }
+    }
+  };
   return (
     <>
       <div>
+        {error && <div className="error">{error}</div>}
         {view ? (
           <>
             <h2>{blog.title}</h2>
@@ -39,6 +54,48 @@ const Blog = ({ blog }) => {
         )}
       </div>
       <button onClick={toggleView}>{view ? "hide" : "view"}</button>
+      <br />
+      <button onClick={handleDelete}>Remove</button>
+      <hr />
+      <br />
+      <style jsx>{`
+        div {
+          border: 1px solid #ccc;
+          padding: 10px;
+          margin: 10px 0;
+        }
+        h2 {
+          margin: 0;
+        }
+        p {
+          margin: 5px 0;
+        }
+      `}</style>
+      <style jsx>{`
+        button {
+          background-color: #007bff;
+          color: white;
+          border: none;
+          padding: 5px 10px;
+          cursor: pointer;
+        }
+        button:hover {
+          background-color: #0056b3;
+        }
+      `}</style>
+      <style jsx>{`
+        hr {
+          border: 0;
+          height: 1px;
+          background-color: #ccc;
+          margin: 20px 0;
+        }
+      `}</style>
+      <style jsx>{`
+        br {
+          margin: 10px 0;
+        }
+      `}</style>
     </>
   );
 };

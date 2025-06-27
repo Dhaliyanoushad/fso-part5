@@ -54,32 +54,6 @@ const App = () => {
     window.localStorage.removeItem("loggedBlogappUser");
     setUser(null);
   };
-  const handleCreateBlog = async (event) => {
-    event.preventDefault();
-    try {
-      const newBlog = {
-        title,
-        author,
-        url,
-      };
-      const createdBlog = await blogService.create(newBlog);
-      setSuccessMessage(
-        `A new blog ${createdBlog.title} by ${createdBlog.author} added`
-      );
-      setTimeout(() => {
-        setSuccessMessage(null);
-      }, 5000);
-      setBlogs(blogs.concat(createdBlog));
-      setTitle("");
-      setAuthor("");
-      setUrl("");
-    } catch (exception) {
-      setErrorMessage("Failed to create blog");
-      setTimeout(() => {
-        setErrorMessage(null);
-      }, 5000);
-    }
-  };
 
   useEffect(() => {
     console.log("Enthaada Code Veno Ninekk?");
@@ -131,13 +105,18 @@ const App = () => {
       {errorMessage && <div className="error">{errorMessage}</div>}
       <button onClick={handleLogout}>Logout</button>
       <Togglable buttonLabel="New Blog">
-        <NewBlog handleCreateBlog={handleCreateBlog} />
+        <NewBlog
+          fetchBlogs={fetchBlogs}
+          setErrorMessage={setErrorMessage}
+          setSuccessMessage={setSuccessMessage}
+          setBlogs={setBlogs}
+        />
       </Togglable>
       {errorMessage && <div className="error">{errorMessage}</div>}
       <ol>
         {blogs.map((blog) => (
           <li key={blog.id}>
-            <Blog key={blog.id} blog={blog} />
+            <Blog key={blog.id} blog={blog} fetchBlogs={fetchBlogs} />
           </li>
         ))}
       </ol>
