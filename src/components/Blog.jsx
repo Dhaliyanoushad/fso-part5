@@ -1,46 +1,33 @@
 import React from "react";
+import { useState } from "react";
 
-const Blog = ({ blog }) => (
-  <div>
-    {blog.title} {blog.author} {blog.url} {blog.likes}
-  </div>
-);
-
-export default Blog;
-export const NewBlog = ({ handleCreateBlog }) => {
+const Blog = ({ blog }) => {
+  const [view, setView] = useState(false);
+  const toggleView = () => {
+    setView(!view);
+  };
   return (
-    <div>
-      <h2>Create New</h2>
-      <form onSubmit={handleCreateBlog}>
-        <div>
-          title
-          <input
-            type="text"
-            value={title}
-            name="Title"
-            onChange={({ target }) => setTitle(target.value)}
-          />
-        </div>
-        <div>
-          author
-          <input
-            type="text"
-            value={author}
-            name="Author"
-            onChange={({ target }) => setAuthor(target.value)}
-          />
-        </div>
-        <div>
-          url
-          <input
-            type="text"
-            value={url}
-            name="Url"
-            onChange={({ target }) => setUrl(target.value)}
-          />
-        </div>
-        <button type="submit">Create Blog</button>
-      </form>
-    </div>
+    <>
+      <div>
+        {view ? (
+          <>
+            <h2>{blog.title}</h2>
+            <p>{blog.author}</p>
+            <p>{blog.url}</p>
+            <p>{blog.likes} likes</p>
+            <button>like</button>
+            <p>added by {blog.user.name}</p>
+          </>
+        ) : (
+          <>
+            <h2>{blog.title}</h2>
+            <p>{blog.author}</p>
+          </>
+        )}
+      </div>
+      <button onClick={toggleView}>{view ? "hide" : "view"}</button>
+    </>
   );
 };
+
+export default Blog;
