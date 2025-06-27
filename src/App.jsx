@@ -13,6 +13,12 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
 
+  const fetchBlogs = async () => {
+    const blogs = await blogService.getAll();
+    const sorted = blogs.sort((a, b) => b.likes - a.likes);
+    setBlogs(sorted);
+  };
+
   const handleLogin = async (event) => {
     event.preventDefault();
     if (username === "" || password === "") {
@@ -31,6 +37,7 @@ const App = () => {
 
       window.localStorage.setItem("loggedBlogappUser", JSON.stringify(user));
       blogService.setToken(user.token);
+      fetchBlogs();
       setUser(user);
 
       setUsername("");
@@ -81,8 +88,7 @@ const App = () => {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
       blogService.setToken(user.token);
-
-      blogService.getAll().then((blogs) => setBlogs(blogs));
+      fetchBlogs();
     }
   }, []);
 
