@@ -1,6 +1,6 @@
-import React from "react";
-import { useState } from "react";
-import blogService from "../services/blogs";
+import React from 'react';
+import { useState } from 'react';
+import blogService from '../services/blogs';
 
 const Blog = ({ blog, fetchBlogs }) => {
   const [view, setView] = useState(false);
@@ -17,7 +17,7 @@ const Blog = ({ blog, fetchBlogs }) => {
       await blogService.update(updatedBlog);
       setLikes(likes + 1);
     } catch (error) {
-      console.error("Error liking the blog:", error);
+      console.error('Error liking the blog:', error);
     }
   };
   const handleDelete = async () => {
@@ -28,8 +28,8 @@ const Blog = ({ blog, fetchBlogs }) => {
         // Assuming you have a function to refresh the blog list
         // refreshBlogs();
       } catch (error) {
-        setError(error.response?.data?.error || "Failed to delete blog");
-        console.error("Error deleting the blog:", error);
+        setError(error.response?.data?.error || 'Failed to delete blog');
+        console.error('Error deleting the blog:', error);
       }
     }
   };
@@ -53,7 +53,7 @@ const Blog = ({ blog, fetchBlogs }) => {
           </>
         )}
       </div>
-      <button onClick={toggleView}>{view ? "hide" : "view"}</button>
+      <button onClick={toggleView}>{view ? 'hide' : 'view'}</button>
       <br />
       <button onClick={handleDelete}>Remove</button>
       <hr />

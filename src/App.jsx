@@ -1,17 +1,22 @@
-import { useState, useEffect } from "react";
-import Blog from "./components/Blog";
-import blogService from "./services/blogs";
-import loginService from "./services/login";
-import Togglable from "./components/Togglable";
-import NewBlog from "./components/NewBlog";
+import { useState, useEffect } from 'react';
+import Blog from './components/Blog';
+import blogService from './services/blogs';
+import loginService from './services/login';
+import Togglable from './components/Togglable';
+import NewBlog from './components/NewBlog';
+import PropTypes from 'prop-types';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+
+  Togglable.propTypes = {
+    buttonLabel: PropTypes.string.isRequired,
+  };
 
   const fetchBlogs = async () => {
     const blogs = await blogService.getAll();
@@ -21,8 +26,8 @@ const App = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    if (username === "" || password === "") {
-      setErrorMessage("Username and password must not be empty");
+    if (username === '' || password === '') {
+      setErrorMessage('Username and password must not be empty');
       setTimeout(() => {
         setErrorMessage(null);
       }, 5000);
@@ -35,15 +40,15 @@ const App = () => {
         password,
       });
 
-      window.localStorage.setItem("loggedBlogappUser", JSON.stringify(user));
+      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user));
       blogService.setToken(user.token);
       fetchBlogs();
       setUser(user);
 
-      setUsername("");
-      setPassword("");
+      setUsername('');
+      setPassword('');
     } catch (exception) {
-      setErrorMessage(exception.message || "Login failed");
+      setErrorMessage(exception.message || 'Login failed');
       setTimeout(() => {
         setErrorMessage(null);
       }, 5000);
@@ -51,13 +56,13 @@ const App = () => {
   };
 
   const handleLogout = () => {
-    window.localStorage.removeItem("loggedBlogappUser");
+    window.localStorage.removeItem('loggedBlogappUser');
     setUser(null);
   };
 
   useEffect(() => {
-    console.log("Enthaada Code Veno Ninekk?");
-    const loggedUserJSON = window.localStorage.getItem("loggedBlogappUser");
+    console.log('Enthaada Code Veno Ninekk?');
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser');
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);

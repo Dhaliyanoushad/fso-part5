@@ -1,6 +1,6 @@
-import React from "react";
-import { useState } from "react";
-import blogService from "../services/blogs";
+import React from 'react';
+import { useState } from 'react';
+import blogService from '../services/blogs';
 
 const NewBlog = ({
   fetchBlogs,
@@ -8,9 +8,9 @@ const NewBlog = ({
   setSuccessMessage,
   setBlogs,
 }) => {
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [url, setUrl] = useState("");
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [url, setUrl] = useState('');
   const handleCreateBlog = async (event) => {
     event.preventDefault();
     try {
@@ -27,12 +27,12 @@ const NewBlog = ({
       setTimeout(() => {
         setSuccessMessage(null);
       }, 5000);
-      setTitle("");
-      setAuthor("");
-      setUrl("");
+      setTitle('');
+      setAuthor('');
+      setUrl('');
     } catch (exception) {
-      console.error("Error creating blog:", exception);
-      setErrorMessage("Failed to create blog");
+      console.error('Error creating blog:', exception);
+      setErrorMessage('Failed to create blog');
       setTimeout(() => {
         setErrorMessage(null);
       }, 5000);
