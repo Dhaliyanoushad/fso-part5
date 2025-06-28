@@ -35,21 +35,22 @@ const Blog = ({ blog, fetchBlogs }) => {
   };
   return (
     <>
-      <div>
+      // Inside your return JSX
+      <div className="blog">
         {error && <div className="error">{error}</div>}
         {view ? (
           <>
-            <h2>{blog.title}</h2>
-            <p>{blog.author}</p>
-            <p>{blog.url}</p>
-            <p>{likes} likes</p>
+            <h2 className="blog-title">{blog.title}</h2>
+            <p className="blog-author">{blog.author}</p>
+            <p className="blog-url">{blog.url}</p>
+            <p className="blog-likes">{likes} likes</p>
             <button onClick={handleLike}>like</button>
             <p>added by {blog.user.name}</p>
           </>
         ) : (
           <>
-            <h2>{blog.title}</h2>
-            <p>{blog.author}</p>
+            <h2 className="blog-title">{blog.title}</h2>
+            <p className="blog-author">{blog.author}</p>
           </>
         )}
       </div>
