@@ -61,7 +61,9 @@ const Blog = ({ blog, fetchBlogs }) => {
         {view ? 'hide' : 'view'}
       </button>
       <br />
-      <button onClick={handleDelete}>Remove</button>
+      <button onClick={handleDelete} data-testid="delete-button">
+        Remove
+      </button>
       <hr />
       <br />
       <style jsx>{`
