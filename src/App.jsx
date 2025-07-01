@@ -80,6 +80,8 @@ const App = () => {
           <div>
             username
             <input
+              data-testid="username"
+              placeholder="Username"
               type="text"
               value={username}
               name="Username"
@@ -89,6 +91,8 @@ const App = () => {
           <div>
             password
             <input
+              data-testid="password"
+              placeholder="Password"
               type="password"
               value={password}
               name="Password"

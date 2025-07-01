@@ -35,7 +35,6 @@ const Blog = ({ blog, fetchBlogs }) => {
   };
   return (
     <>
-      // Inside your return JSX
       <div className="blog">
         {error && <div className="error">{error}</div>}
         {view ? (
