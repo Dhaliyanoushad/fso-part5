@@ -112,7 +112,9 @@ const App = () => {
       <h2>Blogs</h2>
       {successMessage && <div className="success">{successMessage}</div>}
       {errorMessage && <div className="error">{errorMessage}</div>}
-      <button onClick={handleLogout}>Logout</button>
+      <button onClick={handleLogout} name="Logout">
+        Logout
+      </button>
       <Togglable buttonLabel="New Blog">
         <NewBlog
           fetchBlogs={fetchBlogs}

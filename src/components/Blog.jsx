@@ -25,8 +25,6 @@ const Blog = ({ blog, fetchBlogs }) => {
       try {
         await blogService.remove(blog.id);
         fetchBlogs(); // Refresh the blog list after deletion
-        // Assuming you have a function to refresh the blog list
-        // refreshBlogs();
       } catch (error) {
         setError(error.response?.data?.error || 'Failed to delete blog');
         console.error('Error deleting the blog:', error);
@@ -61,9 +59,15 @@ const Blog = ({ blog, fetchBlogs }) => {
         {view ? 'hide' : 'view'}
       </button>
       <br />
-      <button onClick={handleDelete} data-testid="delete-button">
-        Remove
-      </button>
+
+      {JSON.parse(localStorage.getItem('loggedBlogappUser')).username ===
+      blog.user.username ? (
+        <button onClick={handleDelete} data-testid="delete-button">
+          Remove
+        </button>
+      ) : (
+        ''
+      )}
       <hr />
       <br />
       <style jsx>{`
