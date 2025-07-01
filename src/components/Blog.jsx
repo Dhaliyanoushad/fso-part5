@@ -42,8 +42,12 @@ const Blog = ({ blog, fetchBlogs }) => {
             <h2 className="blog-title">{blog.title}</h2>
             <p className="blog-author">{blog.author}</p>
             <p className="blog-url">{blog.url}</p>
-            <p className="blog-likes">{likes} likes</p>
-            <button onClick={handleLike}>like</button>
+            <p className="blog-likes" data-testid="likes">
+              {likes} likes
+            </p>
+            <button onClick={handleLike} name="like">
+              like
+            </button>
             <p>added by {blog.user.name}</p>
           </>
         ) : (
@@ -53,7 +57,9 @@ const Blog = ({ blog, fetchBlogs }) => {
           </>
         )}
       </div>
-      <button onClick={toggleView}>{view ? 'hide' : 'view'}</button>
+      <button onClick={toggleView} name="view">
+        {view ? 'hide' : 'view'}
+      </button>
       <br />
       <button onClick={handleDelete}>Remove</button>
       <hr />
